@@ -17,7 +17,13 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 Color.black.edgesIgnoringSafeArea(.all)  // Background color
-                VStack(spacing: 20) {
+                VStack(spacing: 30) {  // Adjust spacing between elements in the VStack
+                    Text("Choose your workout")
+                        .font(.largeTitle)  // Makes the text larger and more prominent
+                        .fontWeight(.bold)  // Makes the text bold
+                        .foregroundColor(.white)  // Sets the text color to white
+                        .padding(.top, 20)  // Adds padding on the top for the headline
+
                     Button("EMOM") {
                         isActiveEmom = true
                     }
@@ -54,7 +60,7 @@ struct HomeView: View {
                     Button("TABATA") {
                         isActiveTabata = true
                     }
-                    .buttonStyle(TimerButtonStyle(backgroundColor: .blue))
+                    .buttonStyle(TimerButtonStyle(backgroundColor: .green))
                     .background(
                         NavigationLink(destination: TabataView(), isActive: $isActiveTabata) {
                             EmptyView()
