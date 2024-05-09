@@ -11,7 +11,8 @@ import SwiftUI
 struct CrossfitTimerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
+    
 }

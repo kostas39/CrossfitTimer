@@ -7,18 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E93240C2BED2EB200FD5E85 /* CrossfitTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93240B2BED2EB200FD5E85 /* CrossfitTimerApp.swift */; };
 		2E93240E2BED2EB200FD5E85 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93240D2BED2EB200FD5E85 /* ContentView.swift */; };
 		2E9324102BED2EB400FD5E85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E93240F2BED2EB400FD5E85 /* Assets.xcassets */; };
 		2E9324132BED2EB400FD5E85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E9324122BED2EB400FD5E85 /* Preview Assets.xcassets */; };
+		2E93241E2BED2F2A00FD5E85 /* TabataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93241D2BED2F2A00FD5E85 /* TabataView.swift */; };
+		2E9324202BED2F4400FD5E85 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93241F2BED2F4400FD5E85 /* HomeView.swift */; };
+		2E9324222BED2F5200FD5E85 /* AmrapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324212BED2F5200FD5E85 /* AmrapView.swift */; };
+		2E9324242BED2F6600FD5E85 /* ForTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324232BED2F6600FD5E85 /* ForTimeView.swift */; };
+		2E9324262BED2FC500FD5E85 /* CrossfitTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324252BED2FC500FD5E85 /* CrossfitTimerApp.swift */; };
+		2E9324282BED30D700FD5E85 /* EmomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324272BED30D700FD5E85 /* EmomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2E9324082BED2EB200FD5E85 /* CrossfitTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrossfitTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E93240B2BED2EB200FD5E85 /* CrossfitTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossfitTimerApp.swift; sourceTree = "<group>"; };
 		2E93240D2BED2EB200FD5E85 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2E93240F2BED2EB400FD5E85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E9324122BED2EB400FD5E85 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2E93241D2BED2F2A00FD5E85 /* TabataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabataView.swift; sourceTree = "<group>"; };
+		2E93241F2BED2F4400FD5E85 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2E9324212BED2F5200FD5E85 /* AmrapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmrapView.swift; sourceTree = "<group>"; };
+		2E9324232BED2F6600FD5E85 /* ForTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForTimeView.swift; sourceTree = "<group>"; };
+		2E9324252BED2FC500FD5E85 /* CrossfitTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossfitTimerApp.swift; sourceTree = "<group>"; };
+		2E9324272BED30D700FD5E85 /* EmomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +61,8 @@
 		2E93240A2BED2EB200FD5E85 /* CrossfitTimer */ = {
 			isa = PBXGroup;
 			children = (
-				2E93240B2BED2EB200FD5E85 /* CrossfitTimerApp.swift */,
+				2E93241A2BED2EE000FD5E85 /* App */,
+				2E9324192BED2EC300FD5E85 /* Core */,
 				2E93240D2BED2EB200FD5E85 /* ContentView.swift */,
 				2E93240F2BED2EB400FD5E85 /* Assets.xcassets */,
 				2E9324112BED2EB400FD5E85 /* Preview Content */,
@@ -65,6 +76,42 @@
 				2E9324122BED2EB400FD5E85 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2E9324192BED2EC300FD5E85 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2E93241B2BED2EEF00FD5E85 /* Home */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2E93241A2BED2EE000FD5E85 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2E9324252BED2FC500FD5E85 /* CrossfitTimerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2E93241B2BED2EEF00FD5E85 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2E93241C2BED2EFF00FD5E85 /* Views */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2E93241C2BED2EFF00FD5E85 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E93241D2BED2F2A00FD5E85 /* TabataView.swift */,
+				2E93241F2BED2F4400FD5E85 /* HomeView.swift */,
+				2E9324212BED2F5200FD5E85 /* AmrapView.swift */,
+				2E9324232BED2F6600FD5E85 /* ForTimeView.swift */,
+				2E9324272BED30D700FD5E85 /* EmomView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +185,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E93240E2BED2EB200FD5E85 /* ContentView.swift in Sources */,
-				2E93240C2BED2EB200FD5E85 /* CrossfitTimerApp.swift in Sources */,
+				2E9324242BED2F6600FD5E85 /* ForTimeView.swift in Sources */,
+				2E9324282BED30D700FD5E85 /* EmomView.swift in Sources */,
+				2E9324202BED2F4400FD5E85 /* HomeView.swift in Sources */,
+				2E93241E2BED2F2A00FD5E85 /* TabataView.swift in Sources */,
+				2E9324222BED2F5200FD5E85 /* AmrapView.swift in Sources */,
+				2E9324262BED2FC500FD5E85 /* CrossfitTimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
