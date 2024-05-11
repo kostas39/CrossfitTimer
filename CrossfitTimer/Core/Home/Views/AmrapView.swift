@@ -13,7 +13,6 @@ struct AmrapView: View {
     @State private var progress: CGFloat = 1.0 // For the circular progress view
     @State private var timerDuration: Double = 10.0 // Default duration in minutes for the slider
 
-
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -26,7 +25,6 @@ struct AmrapView: View {
                     .foregroundColor(.white)
                     .padding()
 
-                
                 ZStack {
                     Circle() // Background circle
                         .stroke(lineWidth: 20)
@@ -46,25 +44,24 @@ struct AmrapView: View {
                 }
                 .frame(width: 200, height: 200)
                 .padding()
-                
-                
+
                 Text("Duration")
                     .font(.title)
-                    .foregroundStyle(.white)
+                    .foregroundColor(.white)
                     .padding()
-                
+
                 Slider(value: $timerDuration, in: 1...60, step: 1) {
-                                    Text("Duration")
-                                } minimumValueLabel: {
-                                    Text("1m")
-                                } maximumValueLabel: {
-                                    Text("60m")
-                                }
-                                .onChange(of: timerDuration) { newValue in
-                                    timeRemaining = Int(newValue) * 60
-                                    progress = 1.0
-                                }
-                                .padding()
+                    Text("Duration")
+                } minimumValueLabel: {
+                    Text("1m")
+                } maximumValueLabel: {
+                    Text("60m")
+                }
+                .onChange(of: timerDuration) { newValue in
+                    timeRemaining = Int(newValue) * 60
+                    progress = 1.0
+                }
+                .padding()
 
                 HStack(spacing: 40) {
                     Button(action: {
@@ -92,13 +89,16 @@ struct AmrapView: View {
         .onReceive(timer) { _ in
             if self.isActive && self.timeRemaining > 0 {
                 self.timeRemaining -= 1
-                self.progress = CGFloat(self.timeRemaining) / 600.0 // Adjust the progress based on total time
+                self.progress = CGFloat(self.timeRemaining) / CGFloat(timerDuration * 60)
+            } else {
+                isActive = false // Stop the timer if it reaches zero
             }
         }
     }
 
     func resetTimer() {
         timeRemaining = 600 // Reset to 10 minutes
+        timerDuration = 10.0 // Reset slider back to initial value (10 minutes)
         progress = 1.0
         isActive = false
     }
@@ -110,9 +110,8 @@ struct AmrapView: View {
     }
 }
 
-
-
-
-#Preview {
-    AmrapView()
+struct AmrapView_Previews: PreviewProvider {
+    static var previews: some View {
+        AmrapView()
+    }
 }
