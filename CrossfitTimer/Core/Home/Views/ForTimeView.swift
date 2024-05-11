@@ -26,10 +26,14 @@ struct ForTimeView: View {
                     .font(.system(size: 98, weight: .bold))
                     .foregroundColor(.white)
 
-                Text("TimeCap: \(Int(timeCap / 60)) minutes")
+                Text("TimeCap")
                     .font(.title)
                     .foregroundColor(.gray)
                     .padding()
+                Text("\(Int(timeCap / 60)) minutes")
+                    .font(.title)
+                    .foregroundColor(.gray)
+                    
 
                 Slider(value: $timeCap, in: 60...3600, step: 30) { // Slider ranges from 1 minute to 60 minutes
                     Text("Time Cap")
