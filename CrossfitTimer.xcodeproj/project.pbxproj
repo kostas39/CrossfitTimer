@@ -16,6 +16,7 @@
 		2E9324242BED2F6600FD5E85 /* ForTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324232BED2F6600FD5E85 /* ForTimeView.swift */; };
 		2E9324262BED2FC500FD5E85 /* CrossfitTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324252BED2FC500FD5E85 /* CrossfitTimerApp.swift */; };
 		2E9324282BED30D700FD5E85 /* EmomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324272BED30D700FD5E85 /* EmomView.swift */; };
+		2E93242A2BEFA32700FD5E85 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9324292BEFA32700FD5E85 /* CelebrationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		2E9324232BED2F6600FD5E85 /* ForTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForTimeView.swift; sourceTree = "<group>"; };
 		2E9324252BED2FC500FD5E85 /* CrossfitTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossfitTimerApp.swift; sourceTree = "<group>"; };
 		2E9324272BED30D700FD5E85 /* EmomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmomView.swift; sourceTree = "<group>"; };
+		2E9324292BEFA32700FD5E85 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				2E9324212BED2F5200FD5E85 /* AmrapView.swift */,
 				2E9324232BED2F6600FD5E85 /* ForTimeView.swift */,
 				2E9324272BED30D700FD5E85 /* EmomView.swift */,
+				2E9324292BEFA32700FD5E85 /* CelebrationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				2E93240E2BED2EB200FD5E85 /* ContentView.swift in Sources */,
 				2E9324242BED2F6600FD5E85 /* ForTimeView.swift in Sources */,
 				2E9324282BED30D700FD5E85 /* EmomView.swift in Sources */,
+				2E93242A2BEFA32700FD5E85 /* CelebrationView.swift in Sources */,
 				2E9324202BED2F4400FD5E85 /* HomeView.swift in Sources */,
 				2E93241E2BED2F2A00FD5E85 /* TabataView.swift in Sources */,
 				2E9324222BED2F5200FD5E85 /* AmrapView.swift in Sources */,

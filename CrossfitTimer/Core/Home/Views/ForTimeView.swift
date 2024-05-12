@@ -12,6 +12,7 @@ struct ForTimeView: View {
     @State private var isActive = false
     @State private var timeCap: Double = 60  // Initial value for time cap in seconds
     @State private var progress: CGFloat = 1.0
+    
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -26,7 +27,7 @@ struct ForTimeView: View {
                     .font(.system(size: 98, weight: .bold))
                     .foregroundColor(.white)
 
-                Text("TimeCap")
+                Text("TimeCap: ")
                     .font(.title)
                     .foregroundColor(.gray)
                     .padding()
