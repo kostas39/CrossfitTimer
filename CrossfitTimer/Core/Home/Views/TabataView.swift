@@ -9,6 +9,11 @@ import SwiftUI
 
 struct TabataView: View {
     @State private var timeRemaining: Int = 0 // Timer duration in seconds
+    @State private var exerciseSeconds: Double = 20
+    @State private var restSeconds: Double = 10
+    @State private var numberOfRounds: Double = 8
+    @State private var soundAlerts: Bool = true
+    @State private var showingSettings = false // State to control the settings sheet
 
     var body: some View {
         ZStack {
@@ -17,13 +22,11 @@ struct TabataView: View {
             VStack {
                 Spacer()
                 
-                // Title or Indicator
                 Text("EXERCISE")
                     .font(.largeTitle)
                     .foregroundColor(.white)
                     .padding()
 
-                // Circular Timer Display
                 ZStack {
                     Circle() // Background circle
                         .stroke(lineWidth: 20)
@@ -46,7 +49,7 @@ struct TabataView: View {
                 HStack(spacing: 40) {
                     // Settings Button
                     Button("SETTINGS") {
-                        // Action to show settings
+                        showingSettings.toggle() // Show settings sheet
                     }
                     .foregroundColor(.white)
                     .padding()
@@ -66,6 +69,15 @@ struct TabataView: View {
                 Spacer()
             }
         }
+        .sheet(isPresented: $showingSettings) {
+            TabataSettingsView(
+                exerciseSeconds: $exerciseSeconds,
+                restSeconds: $restSeconds,
+                numberOfRounds: $numberOfRounds,
+                soundAlerts: $soundAlerts,
+                isPresented: $showingSettings
+            )
+        }
     }
 
     // Helper function to convert time in seconds to a formatted string
@@ -81,4 +93,5 @@ struct TabataView_Previews: PreviewProvider {
         TabataView()
     }
 }
+
 
