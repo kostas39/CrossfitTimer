@@ -82,7 +82,13 @@ struct EmomView: View {
                 }
 
                 HStack(spacing: 40) {
-                    Button(action: startTimer) {
+                    Button(action: {
+                        if isActive {
+                            isActive = false
+                        } else {
+                            startTimer()
+                        }
+                    }) {
                         Text(isActive ? "PAUSE" : "START")
                             .foregroundColor(.white)
                             .padding(.vertical, 12)
@@ -145,4 +151,3 @@ struct EmomView_Previews: PreviewProvider {
         EmomView()
     }
 }
-
