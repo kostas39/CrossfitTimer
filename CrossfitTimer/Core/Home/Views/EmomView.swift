@@ -13,7 +13,7 @@ struct EmomView: View {
     @State private var currentRound = 1
     @State private var timeRemaining = 60  // 60 seconds for each round
     @State private var showTimer = false  // To toggle visibility of the circular timer
-    @State private var showImage = false  // To toggle the visibility of the image
+    @State private var showCompletionImage = false  // To toggle the visibility of the celebration view
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -21,22 +21,18 @@ struct EmomView: View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)  // Background color set to black
 
-            VStack {
-                Spacer()
-                
-                Text("EMOM")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding()
+            if showCompletionImage {
+                CelebrationView()
+                    .transition(.scale)
+            } else {
+                VStack {
+                    Spacer()
+                    
+                    Text("EMOM")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .padding()
 
-                if showImage {
-                    // Displaying the image when the timer completes
-                    Image("Ale")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 400, height: 400)
-                        .transition(.scale)
-                } else {
                     if showTimer {
                         VStack {
                             Text("\(currentRound)/\(Int(duration))")
@@ -79,35 +75,35 @@ struct EmomView: View {
                         }
                         .padding()
                     }
-                }
 
-                HStack(spacing: 40) {
-                    Button(action: {
-                        if isActive {
-                            isActive = false
-                        } else {
-                            startTimer()
+                    HStack(spacing: 40) {
+                        Button(action: {
+                            if isActive {
+                                isActive = false
+                            } else {
+                                startTimer()
+                            }
+                        }) {
+                            Text(isActive ? "PAUSE" : "START")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 12)
+                                .padding(.horizontal, 30)
+                                .background(isActive ? Color.red : Color.green)
+                                .clipShape(Capsule())
                         }
-                    }) {
-                        Text(isActive ? "PAUSE" : "START")
-                            .foregroundColor(.white)
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 30)
-                            .background(isActive ? Color.red : Color.green)
-                            .clipShape(Capsule())
+
+                        Button("RESET") {
+                            resetTimer()
+                        }
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 30)
+                        .background(Color.blue)
+                        .clipShape(Capsule())
                     }
 
-                    Button("RESET") {
-                        resetTimer()
-                    }
-                    .foregroundColor(.white)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 30)
-                    .background(Color.blue)
-                    .clipShape(Capsule())
+                    Spacer()
                 }
-
-                Spacer()
             }
         }
         .onReceive(timer) { _ in
@@ -122,7 +118,7 @@ struct EmomView: View {
                 } else {
                     isActive = false
                     showTimer = false
-                    showImage = true  // Show the image when all rounds are complete
+                    showCompletionImage = true  // Show the celebration view when all rounds are complete
                 }
             }
         }
@@ -131,7 +127,7 @@ struct EmomView: View {
     func startTimer() {
         isActive = true
         showTimer = true
-        showImage = false  // Ensure image is not shown when restarting the timer
+        showCompletionImage = false  // Ensure celebration view is not shown when restarting the timer
         if currentRound == Int(duration) {
             resetTimer()  // Reset if at the end of the rounds
         }
@@ -142,7 +138,7 @@ struct EmomView: View {
         currentRound = 1
         timeRemaining = 60
         showTimer = false
-        showImage = false  // Hide the image on reset
+        showCompletionImage = false  // Hide the celebration view on reset
     }
 }
 

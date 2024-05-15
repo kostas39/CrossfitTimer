@@ -12,6 +12,7 @@ struct AmrapView: View {
     @State private var isActive = false // Controls the timer activation
     @State private var progress: CGFloat = 1.0 // For the circular progress view
     @State private var timerDuration: Double = 10.0 // Default duration in minutes for the slider
+    @State private var showCompletionImage = false // To toggle the visibility of the celebration view
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -85,13 +86,19 @@ struct AmrapView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
+            
+            if showCompletionImage {
+                CelebrationView()
+                    .transition(.scale)
+            }
         }
         .onReceive(timer) { _ in
             if self.isActive && self.timeRemaining > 0 {
                 self.timeRemaining -= 1
                 self.progress = CGFloat(self.timeRemaining) / CGFloat(timerDuration * 60)
-            } else {
+            } else if self.timeRemaining == 0 {
                 isActive = false // Stop the timer if it reaches zero
+                showCompletionImage = true // Show the celebration view
             }
         }
     }
@@ -101,6 +108,7 @@ struct AmrapView: View {
         timerDuration = 10.0 // Reset slider back to initial value (10 minutes)
         progress = 1.0
         isActive = false
+        showCompletionImage = false // Hide the celebration view on reset
     }
 
     func formatTime(_ totalSeconds: Int) -> String {

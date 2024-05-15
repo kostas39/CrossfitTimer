@@ -12,7 +12,7 @@ struct ForTimeView: View {
     @State private var isActive = false
     @State private var timeCap: Double = 60  // Initial value for time cap in seconds
     @State private var progress: CGFloat = 1.0
-    
+    @State private var showCompletionImage = false // To toggle the visibility of the celebration view
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -35,7 +35,6 @@ struct ForTimeView: View {
                     .font(.title)
                     .foregroundColor(.gray)
                     
-
                 Slider(value: $timeCap, in: 60...3600, step: 30) { // Slider ranges from 1 minute to 60 minutes
                     Text("Time Cap")
                 } minimumValueLabel: {
@@ -70,12 +69,21 @@ struct ForTimeView: View {
 
                 Spacer()
             }
+            
+            if showCompletionImage {
+                CelebrationView()
+                    .transition(.scale)
+            }
         }
         .onReceive(timer) { _ in
-            if self.isActive && self.timeRemaining < Int(self.timeCap) {
+            guard isActive else { return }
+            
+            if self.timeRemaining < Int(self.timeCap) {
                 self.timeRemaining += 1
+                self.progress = CGFloat(self.timeRemaining) / CGFloat(timeCap)
             } else {
                 self.isActive = false  // Stop the timer if it reaches the time cap
+                self.showCompletionImage = true // Show the celebration view
             }
         }
     }
@@ -87,9 +95,10 @@ struct ForTimeView: View {
     }
     
     func resetTimer() {
-        timeRemaining = 0 // Reset to 10 minutes
+        timeRemaining = 0
         progress = 1.0
         isActive = false
+        showCompletionImage = false // Hide the celebration view on reset
     }
 }
 

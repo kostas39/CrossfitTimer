@@ -71,6 +71,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())  // Ensure stack navigation style on all devices
     }
 }
 
@@ -89,7 +90,8 @@ struct TimerButtonStyle: ButtonStyle {
     }
 }
 
-
-#Preview {
-    HomeView()
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+    }
 }

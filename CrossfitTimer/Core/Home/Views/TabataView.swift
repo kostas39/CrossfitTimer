@@ -33,8 +33,8 @@ struct TabataView: View {
                     .foregroundColor(.white)
                     .padding()
 
-                Text("Round \(currentRound)/\(Int(numberOfRounds))")
-                    .font(.title2)
+                Text("\(currentRound)/\(Int(numberOfRounds))")
+                    .font(.title)
                     .foregroundColor(.white)
                     .padding(.bottom, 20)
 
@@ -96,6 +96,11 @@ struct TabataView: View {
                 }
 
                 Spacer()
+            }
+            
+            if showCompletionImage {
+                CelebrationView()
+                    .transition(.scale)
             }
         }
         .sheet(isPresented: $showSettings) {
