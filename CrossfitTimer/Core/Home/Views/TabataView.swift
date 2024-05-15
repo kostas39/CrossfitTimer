@@ -58,29 +58,40 @@ struct TabataView: View {
                 .frame(width: 200, height: 200)
                 .padding(.bottom, 50)
 
-                HStack(spacing: 40) {
-                    Button(action: {
-                        if isActive {
-                            isActive = false
-                        } else {
-                            startTimer()
+                VStack(spacing: 20) {
+                    HStack(spacing: 40) {
+                        Button(action: {
+                            if isActive {
+                                isActive = false
+                            } else {
+                                startTimer()
+                            }
+                        }) {
+                            Text(isActive ? "PAUSE" : "START")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 12)
+                                .padding(.horizontal, 30)
+                                .background(isActive ? Color.red : Color.green)
+                                .clipShape(Capsule())
                         }
-                    }) {
-                        Text(isActive ? "PAUSE" : "START")
-                            .foregroundColor(.white)
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 30)
-                            .background(isActive ? Color.red : Color.green)
-                            .clipShape(Capsule())
+
+                        Button("SETTINGS") {
+                            showSettings.toggle()
+                        }
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 30)
+                        .background(Color.blue)
+                        .clipShape(Capsule())
                     }
 
-                    Button("SETTINGS") {
-                        showSettings.toggle()
+                    Button("RESET") {
+                        resetTimer()
                     }
                     .foregroundColor(.white)
                     .padding(.vertical, 12)
                     .padding(.horizontal, 30)
-                    .background(Color.blue)
+                    .background(Color.orange)
                     .clipShape(Capsule())
                 }
 
@@ -88,6 +99,7 @@ struct TabataView: View {
             }
         }
         .sheet(isPresented: $showSettings) {
+            // Assuming you have a separate TabataSettingsView
             TabataSettingsView(
                 exerciseSeconds: $exerciseSeconds,
                 restSeconds: $restSeconds,
@@ -117,11 +129,20 @@ struct TabataView: View {
                 }
             }
         }
-
     }
 
     func startTimer() {
+        if timeRemaining == 0 && !isActive {
+            timeRemaining = Int(exerciseSeconds)
+            currentRound = 1
+            isExercisePhase = true
+            showCompletionImage = false
+        }
         isActive = true
+    }
+
+    func resetTimer() {
+        isActive = false
         timeRemaining = Int(exerciseSeconds)
         currentRound = 1
         isExercisePhase = true
@@ -134,8 +155,6 @@ struct TabataView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
-
-
 
 struct TabataView_Previews: PreviewProvider {
     static var previews: some View {
