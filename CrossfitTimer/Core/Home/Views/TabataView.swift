@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct TabataView: View {
     @State private var exerciseSeconds: Double = 20
@@ -19,88 +20,90 @@ struct TabataView: View {
     @State private var showSettings = false
     @State private var showCompletionImage = false
 
+    @State private var roundEndPlayer: AVAudioPlayer?
+    @State private var workoutEndPlayer: AVAudioPlayer?
+
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
 
-            VStack {
-                Spacer()
+            if showCompletionImage {
+                CelebrationView()
+            } else {
+                VStack {
+                    Spacer()
 
-                Text(isExercisePhase ? "EXERCISE" : "REST")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding()
-
-                Text("\(currentRound)/\(Int(numberOfRounds))")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.bottom, 20)
-
-                ZStack {
-                    Circle()
-                        .stroke(lineWidth: 20)
-                        .opacity(0.3)
-                        .foregroundColor(Color.gray)
-
-                    Circle()
-                        .trim(from: 0, to: CGFloat(timeRemaining) / CGFloat(isExercisePhase ? exerciseSeconds : restSeconds))
-                        .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
-                        .foregroundColor(isExercisePhase ? Color.green : Color.red)
-                        .rotationEffect(Angle(degrees: -90))
-                        .animation(.linear, value: timeRemaining)
-
-                    Text("\(timeString(from: timeRemaining))")
-                        .font(.system(size: 48))
+                    Text(isExercisePhase ? "EXERCISE" : "REST")
+                        .font(.largeTitle)
                         .foregroundColor(.white)
-                }
-                .frame(width: 200, height: 200)
-                .padding(.bottom, 50)
+                        .padding()
 
-                VStack(spacing: 20) {
-                    HStack(spacing: 40) {
-                        Button(action: {
-                            if isActive {
-                                isActive = false
-                            } else {
-                                startTimer()
+                    Text("Round \(currentRound)/\(Int(numberOfRounds))")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(.bottom, 20)
+
+                    ZStack {
+                        Circle()
+                            .stroke(lineWidth: 20)
+                            .opacity(0.3)
+                            .foregroundColor(Color.gray)
+
+                        Circle()
+                            .trim(from: 0, to: CGFloat(timeRemaining) / CGFloat(isExercisePhase ? exerciseSeconds : restSeconds))
+                            .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
+                            .foregroundColor(isExercisePhase ? Color.green : Color.red)
+                            .rotationEffect(Angle(degrees: -90))
+                            .animation(.linear, value: timeRemaining)
+
+                        Text("\(timeString(from: timeRemaining))")
+                            .font(.system(size: 48))
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 200, height: 200)
+                    .padding(.bottom, 50)
+
+                    VStack(spacing: 20) {
+                        HStack(spacing: 40) {
+                            Button(action: {
+                                if isActive {
+                                    isActive = false
+                                } else {
+                                    startTimer()
+                                }
+                            }) {
+                                Text(isActive ? "PAUSE" : "START")
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 12)
+                                    .padding(.horizontal, 30)
+                                    .background(isActive ? Color.red : Color.green)
+                                    .clipShape(Capsule())
                             }
-                        }) {
-                            Text(isActive ? "PAUSE" : "START")
-                                .foregroundColor(.white)
-                                .padding(.vertical, 12)
-                                .padding(.horizontal, 30)
-                                .background(isActive ? Color.red : Color.green)
-                                .clipShape(Capsule())
+
+                            Button("SETTINGS") {
+                                showSettings.toggle()
+                            }
+                            .foregroundColor(.white)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 30)
+                            .background(Color.blue)
+                            .clipShape(Capsule())
                         }
 
-                        Button("SETTINGS") {
-                            showSettings.toggle()
+                        Button("RESET") {
+                            resetTimer()
                         }
                         .foregroundColor(.white)
                         .padding(.vertical, 12)
                         .padding(.horizontal, 30)
-                        .background(Color.blue)
+                        .background(Color.orange)
                         .clipShape(Capsule())
                     }
 
-                    Button("RESET") {
-                        resetTimer()
-                    }
-                    .foregroundColor(.white)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 30)
-                    .background(Color.orange)
-                    .clipShape(Capsule())
+                    Spacer()
                 }
-
-                Spacer()
-            }
-            
-            if showCompletionImage {
-                CelebrationView()
-                    .transition(.scale)
             }
         }
         .sheet(isPresented: $showSettings) {
@@ -119,6 +122,8 @@ struct TabataView: View {
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {
+                playSound(named: "roundEnd")  // Play round end sound at the transition
+
                 if isExercisePhase {
                     isExercisePhase = false
                     timeRemaining = Int(restSeconds)
@@ -130,9 +135,13 @@ struct TabataView: View {
                     } else {
                         isActive = false
                         showCompletionImage = true
+                        playSound(named: "workoutEnd")  // Play workout end sound
                     }
                 }
             }
+        }
+        .onAppear {
+            prepareSoundPlayers()
         }
     }
 
@@ -158,6 +167,37 @@ struct TabataView: View {
         let minutes = totalSeconds / 60
         let seconds = totalSeconds % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+
+    func prepareSoundPlayers() {
+        roundEndPlayer = createPlayer(for: "roundEnd")
+        workoutEndPlayer = createPlayer(for: "workoutEnd")
+    }
+
+    func createPlayer(for resource: String) -> AVAudioPlayer? {
+        guard let url = Bundle.main.url(forResource: resource, withExtension: "mp3") else {
+            return nil
+        }
+
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+            return player
+        } catch {
+            print("Error creating audio player: \(error)")
+            return nil
+        }
+    }
+
+    func playSound(named soundName: String) {
+        switch soundName {
+        case "roundEnd":
+            roundEndPlayer?.play()
+        case "workoutEnd":
+            workoutEndPlayer?.play()
+        default:
+            break
+        }
     }
 }
 

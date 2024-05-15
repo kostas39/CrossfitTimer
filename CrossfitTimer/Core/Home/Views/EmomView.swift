@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct EmomView: View {
     @State private var duration: Double = 15  // Default duration set to 15 minutes
@@ -13,7 +14,10 @@ struct EmomView: View {
     @State private var currentRound = 1
     @State private var timeRemaining = 60  // 60 seconds for each round
     @State private var showTimer = false  // To toggle visibility of the circular timer
-    @State private var showCompletionImage = false  // To toggle the visibility of the celebration view
+    @State private var showImage = false  // To toggle the visibility of the image
+
+    @State private var roundEndPlayer: AVAudioPlayer?
+    @State private var workoutEndPlayer: AVAudioPlayer?
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -21,9 +25,8 @@ struct EmomView: View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)  // Background color set to black
 
-            if showCompletionImage {
+            if showImage {
                 CelebrationView()
-                    .transition(.scale)
             } else {
                 VStack {
                     Spacer()
@@ -112,22 +115,27 @@ struct EmomView: View {
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {
+                playSound(named: "roundEnd")  // Play round end sound
                 timeRemaining = 60  // Reset for next minute
                 if currentRound < Int(duration) {
                     currentRound += 1
                 } else {
                     isActive = false
                     showTimer = false
-                    showCompletionImage = true  // Show the celebration view when all rounds are complete
+                    showImage = true  // Show the image when all rounds are complete
+                    playSound(named: "workoutEnd")  // Play workout end sound
                 }
             }
+        }
+        .onAppear {
+            prepareSoundPlayers()
         }
     }
 
     func startTimer() {
         isActive = true
         showTimer = true
-        showCompletionImage = false  // Ensure celebration view is not shown when restarting the timer
+        showImage = false  // Ensure image is not shown when restarting the timer
         if currentRound == Int(duration) {
             resetTimer()  // Reset if at the end of the rounds
         }
@@ -138,7 +146,38 @@ struct EmomView: View {
         currentRound = 1
         timeRemaining = 60
         showTimer = false
-        showCompletionImage = false  // Hide the celebration view on reset
+        showImage = false  // Hide the image on reset
+    }
+
+    func prepareSoundPlayers() {
+        roundEndPlayer = createPlayer(for: "roundEnd")
+        workoutEndPlayer = createPlayer(for: "workoutEnd")
+    }
+
+    func createPlayer(for resource: String) -> AVAudioPlayer? {
+        guard let url = Bundle.main.url(forResource: resource, withExtension: "mp3") else {
+            return nil
+        }
+
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+            return player
+        } catch {
+            print("Error creating audio player: \(error)")
+            return nil
+        }
+    }
+
+    func playSound(named soundName: String) {
+        switch soundName {
+        case "roundEnd":
+            roundEndPlayer?.play()
+        case "workoutEnd":
+            workoutEndPlayer?.play()
+        default:
+            break
+        }
     }
 }
 
