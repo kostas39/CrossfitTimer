@@ -41,21 +41,5 @@ WODWatch is a comprehensive CrossFit training companion that offers precision ti
 4. **Monitor Progress**: Follow the on-screen timer and listen for sound alerts.
 5. **Celebrate**: Enjoy celebration animations upon completing your workout.
 
-## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests.
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For any questions or feedback, please contact us at [kolioliosko@gmail.com].
 
