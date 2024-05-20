@@ -1,8 +1,8 @@
 
 # WODWatch
 
-WODWatch is a comprehensive CrossFit training companion that offers precision timing for various workout formats including AMRAP, EMOM, Tabata, and custom intervals. It helps athletes stay motivated with sound alerts and dynamic celebration animations.
-
+WODWatch is a comprehensive CrossFit training companion that offers precision timing for various workout formats including AMRAP, EMOM, Tabata, and custom intervals. It helps athletes stay motivated with sound alerts and dynamic celebration animations. You can download it in App Store using this link:  
+https://apps.apple.com/gb/app/wodwatch/id6502719221
 ## Features
 
 - **AMRAP (As Many Rounds As Possible)**: Set the timer and go for as many rounds as possible within the time limit.
